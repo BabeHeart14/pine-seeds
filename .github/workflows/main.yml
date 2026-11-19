@@ -1,0 +1,26 @@
+name: Update Thai Market Breadth
+
+on:
+  schedule:
+    - cron: '15 10 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install pandas tradingview-screener
+      - run: python update_breadth.py
+      - run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add data/*.csv
+          git commit -m "Update SET Market Breadth data" || exit 0
+          git push
