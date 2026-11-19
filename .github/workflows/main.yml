@@ -21,6 +21,6 @@ jobs:
       - run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add data/*.csv
-          git commit -m "Update SET Market Breadth data" || exit 0
+          git add data/*.csv SET_900_Breadth.pine
+          git commit -m "Update SET Market Breadth data and Pine script" || exit 0
           git push
