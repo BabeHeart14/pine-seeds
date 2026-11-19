@@ -1,0 +1,31 @@
+{
+  "symbol": [
+    "SET_AD_LINE",
+    "SET_TRIN",
+    "SET_MCCLELLAN",
+    "SET_PCT_SMA50",
+    "SET_NH_NL"
+  ],
+  "description": [
+    "SET Advance/Decline Line (All Common Stocks)",
+    "SET Arms Index / TRIN (All Common Stocks)",
+    "SET McClellan Oscillator (All Common Stocks)",
+    "SET % of Stocks Above SMA 50",
+    "SET New Highs - New Lows Index (52W)"
+  ],
+  "exchange-listed": "SET",
+  "exchange-traded": "SET",
+  "minmovement": 1,
+  "minmovement2": 0,
+  "pricescale": [
+    1,
+    100,
+    100,
+    100,
+    1
+  ],
+  "has-dwm": true,
+  "has-intraday": false,
+  "timezone": "Asia/Bangkok",
+  "session-regular": "0930-1700"
+}
