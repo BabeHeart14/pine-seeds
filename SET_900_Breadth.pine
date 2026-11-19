@@ -1,0 +1,39 @@
+//@version=5
+indicator("SET All Common Stocks (~900) Market Breadth", shorttitle="SET 900 Breadth", overlay=false)
+
+// เลือกอินดิเคเตอร์ที่ต้องการแสดงผลจากเมนู Settings (รูปเฟือง)
+metric = input.string("A/D Line", title="เลือก Market Breadth ที่ต้องการแสดง", options=["A/D Line", "TRIN (Arms Index)", "McClellan Oscillator", "% Above SMA 50", "NH-NL Index (52W)", "Valid Stocks Count"])
+ema_len = input.int(10, title="Signal EMA Length", minval=1)
+
+// ข้อมูลอัปเดตอัตโนมัติจาก GitHub (อัปเดตล่าสุด: 2026-11-19 17:06 BKK)
+var int[]   dates_arr = array.from(20261119)
+var float[] ad_arr    = array.from(74)
+var float[] trin_arr  = array.from(1.68)
+var float[] mcc_arr   = array.from(0.0)
+var float[] sma_arr   = array.from(34.74)
+var float[] nhnl_arr  = array.from(0)
+var float[] cnt_arr   = array.from(190)
+
+// จับคู่วันที่บนกราฟ TradingView ให้ตรงกับข้อมูลย้อนหลัง
+bar_date = year(time, "Asia/Bangkok") * 10000 + month(time, "Asia/Bangkok") * 100 + dayofmonth(time, "Asia/Bangkok")
+idx = array.indexof(dates_arr, bar_date)
+
+float val = na
+if idx != -1
+    val := switch metric
+        "A/D Line"             => array.get(ad_arr, idx)
+        "TRIN (Arms Index)"    => array.get(trin_arr, idx)
+        "McClellan Oscillator" => array.get(mcc_arr, idx)
+        "% Above SMA 50"       => array.get(sma_arr, idx)
+        "NH-NL Index (52W)"    => array.get(nhnl_arr, idx)
+        "Valid Stocks Count"   => array.get(cnt_arr, idx)
+
+sig_ema = ta.ema(val, ema_len)
+
+// แสดงผลกราฟ (หากมีข้อมูล 1 วันแรก จะพล็อตเป็นจุดวงกลมใหญ่ให้เห็นชัดเจน)
+is_hist = metric == "McClellan Oscillator" or metric == "NH-NL Index (52W)"
+plot_col = metric == "TRIN (Arms Index)" ? (val < 1.0 ? color.new(#00C853, 0) : color.new(#D50000, 0)) : color.new(#2962FF, 0)
+
+plot(val, title="Market Breadth Value", color=plot_col, linewidth=3, style=is_hist ? plot.style_columns : plot.style_linebr)
+plot(val, title="Data Point Marker", color=plot_col, linewidth=4, style=plot.style_circles)
+plot(sig_ema, title="Signal EMA", color=color.new(#FF6D00, 0), linewidth=1)
