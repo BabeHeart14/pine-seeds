@@ -5,14 +5,14 @@ indicator("SET All Common Stocks (~900) Market Breadth", shorttitle="SET 900 Bre
 metric = input.string("A/D Line", title="เลือก Market Breadth ที่ต้องการแสดง", options=["A/D Line", "TRIN (Arms Index)", "McClellan Oscillator", "% Above SMA 50", "NH-NL Index (52W)", "Valid Stocks Count"])
 ema_len = input.int(10, title="Signal EMA Length", minval=1)
 
-// ข้อมูลอัปเดตอัตโนมัติจาก GitHub (อัปเดตล่าสุด: 2026-11-19 18:11 BKK)
-var int[]   dates_arr = array.from(20261119)
-var float[] ad_arr    = array.from(123)
-var float[] trin_arr  = array.from(1.68)
-var float[] mcc_arr   = array.from(0.0)
-var float[] sma_arr   = array.from(34.74)
-var float[] nhnl_arr  = array.from(0)
-var float[] cnt_arr   = array.from(190)
+// ข้อมูลอัปเดตอัตโนมัติจาก GitHub (อัปเดตล่าสุด: 2026-11-20 18:14 BKK)
+var int[]   dates_arr = array.from(20261119,20261120)
+var float[] ad_arr    = array.from(123,-31)
+var float[] trin_arr  = array.from(1.68,0.5)
+var float[] mcc_arr   = array.from(0.0,-13.85)
+var float[] sma_arr   = array.from(34.74,24.75)
+var float[] nhnl_arr  = array.from(0,-1)
+var float[] cnt_arr   = array.from(190,198)
 
 // จับคู่วันที่บนกราฟ TradingView ให้ตรงกับข้อมูลย้อนหลัง
 bar_date = year(time, "Asia/Bangkok") * 10000 + month(time, "Asia/Bangkok") * 100 + dayofmonth(time, "Asia/Bangkok")
